@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WhatsApp-like Chat Interface</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <div class="sidebar">
+      <div class="profile">
+        <img src="profile_picture.jpg" alt="Profile Picture">
+        <div class="profile-info">
+          <h3 id="nam">Your Name</h3>
+          <span>Status: Online</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search contacts">
+      </div>
+      <div class="contact-list" id="allcontact">
+        
+      
+        <!-- Add more contacts here -->
+      </div>
+    </div>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="contact-profile">
+          <img src="john_doe_picture.jpg" alt="John Doe">
+          <div class="contact-info">
+            <h3 id="contact-name">John Doe</h3>
+            <span>Last seen: 5 minutes ago</span>
+          </div>
+        </div>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <!-- Chat messages will be displayed here -->
+      </div>
+      <div class="message-input">
+        <input type="text" placeholder="Type your message..." id="message-input">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+ 
+
+  
+  <script src="script.js"></script>
+</body>
+</html>

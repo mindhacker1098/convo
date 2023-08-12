@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Individual Chat</title>
+  <!-- <link rel="stylesheet" href="/style.css"> -->
+
+</head>
+<body>
+  <h1>Individual Chat</h1>
+  <div>
+    <ul id="messages"></ul>
+  </div>
+  <input id="inputMessage" type="text" placeholder="Type your message" />
+  <button id="sendButton">Send</button>
+
+  <!-- Add private chat elements -->
+  <input id="recipientUsername" type="text" placeholder="Recipient's username" />
+  <button id="sendPrivateButton">Send Private</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+
+    const messages = document.getElementById('messages');
+    const inputMessage = document.getElementById('inputMessage');
+    const sendButton = document.getElementById('sendButton');
+
+    // Event listener for sending public messages
+    sendButton.addEventListener('click', () => {
+      const message = inputMessage.value;
+      if (message.trim()) {
+        socket.emit('message', message);
+        inputMessage.value = '';
+      }
+    });
+
+    // Event listener for sending private messages
+    const recipientUsername = document.getElementById('recipientUsername');
+    const sendPrivateButton = document.getElementById('sendPrivateButton');
+
+    sendPrivateButton.addEventListener('click', () => {
+      const recipient = recipientUsername.value;
+      const message = inputMessage.value;
+
+      if (recipient.trim() && message.trim()) {
+        socket.emit('privateMessage', { recipient, message });
+        inputMessage.value = '';
+      }
+    });
+
+    // Event listener for receiving private messages
+    socket.on('privateMessage', (data) => {
+      const { sender, message } = data;
+      const messageElement = document.createElement('li');
+      messageElement.textContent = `Private message from ${sender}: ${message}`;
+      messages.appendChild(messageElement);
+    });
+
+    // Prompt user to set a username
+    const username = prompt('Please enter your username:');
+    socket.emit('setUsername', username);
+  </script>
+</body>
+</html>
